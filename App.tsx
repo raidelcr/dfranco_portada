@@ -7,7 +7,7 @@ import { Footer } from './components/Footer';
 import { MOCK_PRODUCTS, SLIDER_ITEMS, CATEGORIES_DATA } from './constants';
 import { Product, SortOption, Category } from './types';
 import { CategoryShowcase } from './components/CategoryShowcase';
-import { SearchIcon } from './components/icons';
+import { SearchIcon, GridIcon, ListIcon } from './components/icons';
 
 const FilterControls: React.FC<{
     searchTerm: string, setSearchTerm: (v: string) => void,
@@ -76,6 +76,8 @@ const FilterControls: React.FC<{
     </div>
 );
 
+type ViewMode = 'grid' | 'list';
+
 const App: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -88,6 +90,11 @@ const App: React.FC = () => {
     const [priceRange, setPriceRange] = useState<number>(1500);
     const [inStockOnly, setInStockOnly] = useState<boolean>(false);
     const [sortOption, setSortOption] = useState<SortOption>(SortOption.Newest);
+    const [viewMode, setViewMode] = useState<ViewMode>('grid');
+    
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const PRODUCTS_PER_PAGE = 12;
 
     useEffect(() => {
         setProducts(MOCK_PRODUCTS);
@@ -116,7 +123,27 @@ const App: React.FC = () => {
         }
 
         setFilteredProducts(tempProducts);
+        setCurrentPage(1); // Reset to page 1 on filter change
     }, [searchTerm, selectedCategory, priceRange, inStockOnly, sortOption, products]);
+    
+    // Pagination logic
+    const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+    const paginatedProducts = useMemo(() => {
+        const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+        return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+    }, [currentPage, filteredProducts]);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
     
     const closeAllOverlays = () => {
         setIsMenuVisible(false);
@@ -176,7 +203,37 @@ const App: React.FC = () => {
                         maxPrice={maxPrice}
                     />
                     <main className="w-full mt-8 md:mt-0">
-                        <ProductGrid products={filteredProducts} />
+                        <div className="flex justify-between items-center mb-4">
+                            <p className="text-sm text-gray-500">
+                                Mostrando <span className="font-semibold text-brand-dark">{paginatedProducts.length}</span> de <span className="font-semibold text-brand-dark">{filteredProducts.length}</span> productos
+                            </p>
+                             <div className="hidden sm:flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
+                                <button 
+                                    onClick={() => setViewMode('grid')} 
+                                    className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
+                                    aria-label="Vista de cuadrícula"
+                                    aria-pressed={viewMode === 'grid'}
+                                >
+                                    <GridIcon className="w-5 h-5" />
+                                </button>
+                                <button 
+                                    onClick={() => setViewMode('list')}
+                                    className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
+                                    aria-label="Vista de lista"
+                                    aria-pressed={viewMode === 'list'}
+                                >
+                                    <ListIcon className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                        <ProductGrid
+                            products={paginatedProducts}
+                            viewMode={viewMode}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onNextPage={handleNextPage}
+                            onPrevPage={handlePrevPage}
+                        />
                     </main>
                 </div>
             </div>

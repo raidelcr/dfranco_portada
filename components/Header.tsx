@@ -10,7 +10,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle, onFilterToggle }) 
     return (
         <header className="sticky top-0 bg-white/80 backdrop-blur-sm shadow-sm z-40">
             <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center h-16">
+                <div className="flex justify-between items-center h-14 md:h-20">
                     {/* Logo */}
                     <a href="#" className="block" aria-label="Página de inicio de DFRANCO">
                         <img 
@@ -19,17 +19,16 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle, onFilterToggle }) 
                             className="h-10 md:h-14 w-auto" 
                         />
                     </a>
-
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center space-x-8">
-                        <a href="#" className="text-black-600 hover:text-brand-orange font-medium transition-colors">Inicio</a>
-                        <a href="#" className="text-black-600 hover:text-brand-orange font-medium transition-colors">Inspiración</a>
-                        <a href="#" className="text-black-600 hover:text-brand-orange font-medium transition-colors">Servicios</a>
-                    </nav>
                     
-                     {/* Right side icons */}
-                    <div className="flex items-center gap-1">
-                        {/* Mobile Action Icons */}
+                    <div className="flex items-center gap-6">
+                        {/* Desktop Navigation */}
+                        <nav className="hidden md:flex items-center space-x-8">
+                            <a href="#" className="text-black-600 hover:text-brand-orange font-medium transition-colors">Inicio</a>
+                            <a href="#" className="text-black-600 hover:text-brand-orange font-medium transition-colors">Inspiración</a>
+                            <a href="#" className="text-black-600 hover:text-brand-orange font-medium transition-colors">Servicios</a>
+                        </nav>
+                        
+                         {/* Mobile Action Icons */}
                         <div className="flex items-center md:hidden">
                             <button onClick={onFilterToggle} className="text-black p-2 rounded-full" aria-label="Abrir filtros">
                                 <FilterIcon className="w-6 h-6" />
