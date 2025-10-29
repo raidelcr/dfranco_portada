@@ -203,11 +203,11 @@ const App: React.FC = () => {
                         maxPrice={maxPrice}
                     />
                     <main className="w-full mt-8 md:mt-0">
-                        <div className="flex justify-between items-center mb-4">
-                            <p className="text-sm text-gray-500">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
+                            <p className="hidden sm:block text-sm text-gray-500">
                                 Mostrando <span className="font-semibold text-brand-dark">{paginatedProducts.length}</span> de <span className="font-semibold text-brand-dark">{filteredProducts.length}</span> productos
                             </p>
-                             <div className="hidden sm:flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
+                             <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-lg self-end sm:self-auto">
                                 <button 
                                     onClick={() => setViewMode('grid')} 
                                     className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
