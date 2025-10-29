@@ -5,9 +5,10 @@ import { Filters } from './components/Filters';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
 import { MOCK_PRODUCTS, SLIDER_ITEMS, CATEGORIES_DATA } from './constants';
-import { Product, SortOption, Category } from './types';
+import { Product, SortOption, Category, ViewMode } from './types';
 import { CategoryShowcase } from './components/CategoryShowcase';
 import { SearchIcon, GridIcon, ListIcon } from './components/icons';
+import { ProductDetail } from './components/ProductDetail';
 
 const FilterControls: React.FC<{
     searchTerm: string, setSearchTerm: (v: string) => void,
@@ -76,13 +77,12 @@ const FilterControls: React.FC<{
     </div>
 );
 
-type ViewMode = 'grid' | 'list';
-
 const App: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isFilterDropdownVisible, setIsFilterDropdownVisible] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     // Filter states
     const [searchTerm, setSearchTerm] = useState('');
@@ -145,6 +145,15 @@ const App: React.FC = () => {
         }
     };
     
+    const handleProductSelect = (product: Product) => {
+        setSelectedProduct(product);
+        window.scrollTo(0, 0);
+    };
+
+    const handleBackToList = () => {
+        setSelectedProduct(null);
+    };
+
     const closeAllOverlays = () => {
         setIsMenuVisible(false);
         setIsFilterDropdownVisible(false);
@@ -156,87 +165,101 @@ const App: React.FC = () => {
                 onMenuToggle={() => setIsMenuVisible(!isMenuVisible)}
                 onFilterToggle={() => setIsFilterDropdownVisible(!isFilterDropdownVisible)} 
             />
-
-            {/* Mobile Filter Dropdown */}
-            {isFilterDropdownVisible && (
-                 <>
-                    <div 
-                        className="fixed inset-0 z-20 md:hidden" 
-                        onClick={() => setIsFilterDropdownVisible(false)} 
-                        aria-hidden="true"
-                    ></div>
-                    <div className="md:hidden fixed top-16 left-4 right-4 bg-white/90 backdrop-blur-sm shadow-xl z-30 rounded-b-lg p-6 animate-fade-in-down">
-                        <FilterControls 
-                            searchTerm={searchTerm} setSearchTerm={setSearchTerm}
-                            sortOption={sortOption} setSortOption={setSortOption}
-                            priceRange={priceRange} setPriceRange={setPriceRange} maxPrice={maxPrice}
-                            inStockOnly={inStockOnly} setInStockOnly={setInStockOnly}
-                        />
-                    </div>
-                </>
-            )}
             
-            <Slider items={SLIDER_ITEMS} />
-
-            <CategoryShowcase 
-                categories={CATEGORIES_DATA}
-                selectedCategory={selectedCategory}
-                onSelectCategory={(cat) => {
-                    setSelectedCategory(cat);
-                    closeAllOverlays();
-                }}
-            />
-
-            <div className="container mx-auto px-4 md:mt-4 flex-grow w-full">
-                <div className="md:flex md:gap-8">
-                    <Filters
-                        isVisible={isMenuVisible}
-                        onClose={() => setIsMenuVisible(false)}
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        priceRange={priceRange}
-                        setPriceRange={setPriceRange}
-                        inStockOnly={inStockOnly}
-                        setInStockOnly={setInStockOnly}
-                        sortOption={sortOption}
-                        setSortOption={setSortOption}
-                        maxPrice={maxPrice}
+            <main className="flex-grow">
+                {selectedProduct ? (
+                    <ProductDetail 
+                        product={selectedProduct} 
+                        onBack={handleBackToList}
+                        allProducts={products}
+                        onProductSelect={handleProductSelect} 
                     />
-                    <main className="w-full mt-8 md:mt-0">
-                        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
-                            <p className="hidden sm:block text-sm text-gray-500">
-                                Mostrando <span className="font-semibold text-brand-dark">{paginatedProducts.length}</span> de <span className="font-semibold text-brand-dark">{filteredProducts.length}</span> productos
-                            </p>
-                             <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-lg self-end sm:self-auto">
-                                <button 
-                                    onClick={() => setViewMode('grid')} 
-                                    className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
-                                    aria-label="Vista de cuadrícula"
-                                    aria-pressed={viewMode === 'grid'}
-                                >
-                                    <GridIcon className="w-5 h-5" />
-                                </button>
-                                <button 
-                                    onClick={() => setViewMode('list')}
-                                    className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
-                                    aria-label="Vista de lista"
-                                    aria-pressed={viewMode === 'list'}
-                                >
-                                    <ListIcon className="w-5 h-5" />
-                                </button>
+                ) : (
+                    <>
+                        {/* Mobile Filter Dropdown */}
+                        {isFilterDropdownVisible && (
+                             <>
+                                <div 
+                                    className="fixed inset-0 z-20 md:hidden" 
+                                    onClick={() => setIsFilterDropdownVisible(false)} 
+                                    aria-hidden="true"
+                                ></div>
+                                <div className="md:hidden fixed top-16 left-4 right-4 bg-white/90 backdrop-blur-sm shadow-xl z-30 rounded-b-lg p-6 animate-fade-in-down">
+                                    <FilterControls 
+                                        searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                                        sortOption={sortOption} setSortOption={setSortOption}
+                                        priceRange={priceRange} setPriceRange={setPriceRange} maxPrice={maxPrice}
+                                        inStockOnly={inStockOnly} setInStockOnly={setInStockOnly}
+                                    />
+                                </div>
+                            </>
+                        )}
+                        
+                        <Slider items={SLIDER_ITEMS} />
+
+                        <CategoryShowcase 
+                            categories={CATEGORIES_DATA}
+                            selectedCategory={selectedCategory}
+                            onSelectCategory={(cat) => {
+                                setSelectedCategory(cat);
+                                closeAllOverlays();
+                            }}
+                        />
+
+                        <div className="container mx-auto px-4 md:mt-4 w-full">
+                            <div className="md:flex md:gap-8">
+                                <Filters
+                                    isVisible={isMenuVisible}
+                                    onClose={() => setIsMenuVisible(false)}
+                                    searchTerm={searchTerm}
+                                    setSearchTerm={setSearchTerm}
+                                    priceRange={priceRange}
+                                    setPriceRange={setPriceRange}
+                                    inStockOnly={inStockOnly}
+                                    setInStockOnly={setInStockOnly}
+                                    sortOption={sortOption}
+                                    setSortOption={setSortOption}
+                                    maxPrice={maxPrice}
+                                />
+                                <div className="w-full mt-8 md:mt-0">
+                                    <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-4">
+                                        <p className="hidden sm:block text-sm text-gray-500">
+                                            Mostrando <span className="font-semibold text-brand-dark">{paginatedProducts.length}</span> de <span className="font-semibold text-brand-dark">{filteredProducts.length}</span> productos
+                                        </p>
+                                         <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-lg self-end sm:self-auto">
+                                            <button 
+                                                onClick={() => setViewMode('grid')} 
+                                                className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
+                                                aria-label="Vista de cuadrícula"
+                                                aria-pressed={viewMode === 'grid'}
+                                            >
+                                                <GridIcon className="w-5 h-5" />
+                                            </button>
+                                            <button 
+                                                onClick={() => setViewMode('list')}
+                                                className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow text-brand-orange' : 'text-gray-500 hover:text-brand-dark'}`}
+                                                aria-label="Vista de lista"
+                                                aria-pressed={viewMode === 'list'}
+                                            >
+                                                <ListIcon className="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <ProductGrid
+                                        products={paginatedProducts}
+                                        viewMode={viewMode}
+                                        onProductSelect={handleProductSelect}
+                                        currentPage={currentPage}
+                                        totalPages={totalPages}
+                                        onNextPage={handleNextPage}
+                                        onPrevPage={handlePrevPage}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <ProductGrid
-                            products={paginatedProducts}
-                            viewMode={viewMode}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onNextPage={handleNextPage}
-                            onPrevPage={handlePrevPage}
-                        />
-                    </main>
-                </div>
-            </div>
+                    </>
+                )}
+            </main>
             
             <Footer />
         </div>

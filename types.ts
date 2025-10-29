@@ -4,8 +4,9 @@ export interface Product {
     description: string;
     price: number;
     category: Category;
-    imageUrl: string;
+    imageUrls: string[];
     inStock: boolean;
+    featured: boolean;
     createdAt: string; // ISO 8601 date string
 }
 
@@ -22,3 +23,5 @@ export enum SortOption {
     PriceAsc = 'price-asc',
     PriceDesc = 'price-desc',
 }
+
+export type ViewMode = 'grid' | 'list';

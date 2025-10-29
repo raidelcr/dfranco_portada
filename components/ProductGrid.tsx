@@ -1,18 +1,19 @@
 import React from 'react';
-import { Product } from '../types';
-import { ProductCard } from './ProductCard';
+import { Product, ViewMode } from '../types';
+import { GridViewCard, ListViewCard } from './ProductCard';
 import { ChevronLeftIcon, ChevronRightIcon } from './icons';
 
 interface ProductGridProps {
     products: Product[];
-    viewMode: 'grid' | 'list';
+    viewMode: ViewMode;
+    onProductSelect: (product: Product) => void;
     currentPage: number;
     totalPages: number;
     onNextPage: () => void;
     onPrevPage: () => void;
 }
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ products, viewMode, currentPage, totalPages, onNextPage, onPrevPage }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({ products, viewMode, onProductSelect, currentPage, totalPages, onNextPage, onPrevPage }) => {
     if (products.length === 0) {
         return (
             <div className="text-center py-20">
@@ -30,7 +31,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products, viewMode, cu
         <>
             <div className={containerClasses}>
                 {products.map(product => (
-                    <ProductCard key={product.id} product={product} viewMode={viewMode} />
+                    viewMode === 'grid' 
+                        ? <GridViewCard key={`${product.id}-grid`} product={product} onSelect={onProductSelect} />
+                        : <ListViewCard key={`${product.id}-list`} product={product} onSelect={onProductSelect} />
                 ))}
             </div>
 

@@ -15,8 +15,14 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'El último modelo con cámara de 108MP y 5G.',
         price: 799.99,
         category: 'Electrónicos',
-        imageUrl: 'https://picsum.photos/seed/smartphone/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/smartphone/800/800',
+            'https://picsum.photos/seed/smartphone_angle/800/800',
+            'https://picsum.photos/seed/smartphone_case/800/800',
+            'https://picsum.photos/seed/smartphone_box/800/800',
+        ],
         inStock: true,
+        featured: true,
         createdAt: '2023-10-26T10:00:00Z',
     },
     {
@@ -25,8 +31,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Sonido inmersivo y cancelación de ruido activa.',
         price: 129.50,
         category: 'Electrónicos',
-        imageUrl: 'https://picsum.photos/seed/headphones/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/headphones/800/800',
+            'https://picsum.photos/seed/headphones_case/800/800',
+            'https://picsum.photos/seed/headphones_ear/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-10-22T11:30:00Z',
     },
     {
@@ -35,8 +46,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Suave, cómoda y perfecta para el uso diario.',
         price: 25.00,
         category: 'Ropa',
-        imageUrl: 'https://picsum.photos/seed/tshirt/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/tshirt/800/800',
+            'https://picsum.photos/seed/tshirt_folded/800/800',
+            'https://picsum.photos/seed/tshirt_model/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-09-15T09:00:00Z',
     },
     {
@@ -45,8 +61,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Un corte atemporal que nunca pasa de moda.',
         price: 60.00,
         category: 'Ropa',
-        imageUrl: 'https://picsum.photos/seed/jeans/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/jeans/800/800',
+            'https://picsum.photos/seed/jeans_detail/800/800',
+            'https://picsum.photos/seed/jeans_back/800/800',
+        ],
         inStock: false,
+        featured: false,
         createdAt: '2023-09-20T14:00:00Z',
     },
     {
@@ -55,8 +76,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Iluminación ajustable para tu espacio de trabajo.',
         price: 45.99,
         category: 'Hogar',
-        imageUrl: 'https://picsum.photos/seed/lamp/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/lamp/800/800',
+            'https://picsum.photos/seed/lamp_on/800/800',
+            'https://picsum.photos/seed/lamp_desk/800/800',
+        ],
         inStock: true,
+        featured: true,
         createdAt: '2023-10-10T18:00:00Z',
     },
     {
@@ -65,8 +91,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Microfibra de alta calidad para un sueño reparador.',
         price: 89.99,
         category: 'Hogar',
-        imageUrl: 'https://picsum.photos/seed/sheets/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/sheets/800/800',
+            'https://picsum.photos/seed/sheets_bed/800/800',
+            'https://picsum.photos/seed/sheets_folded/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-08-05T12:00:00Z',
     },
     {
@@ -75,8 +106,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Una guía esencial para desarrolladores de software.',
         price: 35.50,
         category: 'Libros',
-        imageUrl: 'https://picsum.photos/seed/book1/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/book1/800/800',
+            'https://picsum.photos/seed/book1_open/800/800',
+            'https://picsum.photos/seed/book1_stack/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-10-25T16:45:00Z',
     },
     {
@@ -85,8 +121,12 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Un viaje épico a través de galaxias lejanas.',
         price: 22.00,
         category: 'Libros',
-        imageUrl: 'https://picsum.photos/seed/book2/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/book2/800/800',
+            'https://picsum.photos/seed/book2_side/800/800',
+        ],
         inStock: false,
+        featured: false,
         createdAt: '2023-07-30T20:00:00Z',
     },
     {
@@ -95,8 +135,14 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Potencia y portabilidad en un diseño elegante.',
         price: 1200.00,
         category: 'Electrónicos',
-        imageUrl: 'https://picsum.photos/seed/laptop/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/laptop/800/800',
+            'https://picsum.photos/seed/laptop_open/800/800',
+            'https://picsum.photos/seed/laptop_side/800/800',
+            'https://picsum.photos/seed/laptop_keyboard/800/800',
+        ],
         inStock: true,
+        featured: true,
         createdAt: '2023-10-18T08:20:00Z',
     },
     {
@@ -105,8 +151,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Abrigo y estilo para los días más fríos.',
         price: 55.00,
         category: 'Ropa',
-        imageUrl: 'https://picsum.photos/seed/hoodie/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/hoodie/800/800',
+            'https://picsum.photos/seed/hoodie_model/800/800',
+            'https://picsum.photos/seed/hoodie_back/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-10-01T13:10:00Z',
     },
     {
@@ -115,8 +166,12 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Prepara el café perfecto cada mañana fácilmente.',
         price: 75.00,
         category: 'Hogar',
-        imageUrl: 'https://picsum.photos/seed/coffee/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/coffee/800/800',
+            'https://picsum.photos/seed/coffee_making/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-09-11T07:00:00Z',
     },
     {
@@ -125,8 +180,12 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Un recorrido completo por los eventos clave de la humanidad.',
         price: 40.00,
         category: 'Libros',
-        imageUrl: 'https://picsum.photos/seed/book3/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/book3/800/800',
+            'https://picsum.photos/seed/book3_open/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-10-27T10:00:00Z',
     },
     {
@@ -135,8 +194,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Experiencia inmersiva para gaming y trabajo.',
         price: 350.00,
         category: 'Electrónicos',
-        imageUrl: 'https://picsum.photos/seed/monitor/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/monitor/800/800',
+            'https://picsum.photos/seed/monitor_desk/800/800',
+            'https://picsum.photos/seed/monitor_side/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-11-01T10:00:00Z',
     },
     {
@@ -145,8 +209,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Ligero y fresco para los días calurosos.',
         price: 49.99,
         category: 'Ropa',
-        imageUrl: 'https://picsum.photos/seed/dress/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/dress/800/800',
+            'https://picsum.photos/seed/dress_model/800/800',
+            'https://picsum.photos/seed/dress_fabric/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-10-30T11:30:00Z',
     },
     {
@@ -155,8 +224,13 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Acero inoxidable de alta calidad para tu cocina.',
         price: 110.00,
         category: 'Hogar',
-        imageUrl: 'https://picsum.photos/seed/knives/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/knives/800/800',
+            'https://picsum.photos/seed/knives_block/800/800',
+            'https://picsum.photos/seed/knives_use/800/800',
+        ],
         inStock: false,
+        featured: false,
         createdAt: '2023-10-29T18:00:00Z',
     },
     {
@@ -165,8 +239,11 @@ export const MOCK_PRODUCTS: Product[] = [
         description: 'Un thriller que no podrás dejar de leer.',
         price: 19.95,
         category: 'Libros',
-        imageUrl: 'https://picsum.photos/seed/book4/400/400',
+        imageUrls: [
+            'https://picsum.photos/seed/book4/800/800',
+        ],
         inStock: true,
+        featured: false,
         createdAt: '2023-11-02T15:00:00Z',
     },
 ];
