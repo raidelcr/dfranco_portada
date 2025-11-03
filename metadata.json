@@ -1,5 +1,5 @@
 {
-  "name": "E-commerce Minimalista",
+  "name": "DFranco Mobiliario",
   "description": "Una página principal de un e-commerce con diseño minimalista, que permite a los usuarios buscar, filtrar y ordenar productos. Construida con React, TypeScript y Tailwind CSS, con un enfoque 'mobile-first'.",
   "requestFramePermissions": []
 }
