@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-commerce Minimalista</title>
+    <title>Cargando...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class', // Habilitar modo oscuro
             theme: {
                 extend: {
                     colors: {
                         'brand-orange': '#F97316', // Naranja vibrante
-                        'brand-dark': '#111827',   // Casi negro
+                        'brand-dark': '#000000',   // Negro para modo oscuro
                         'brand-light': '#F9FAFB',  // Blanco roto
                     },
                     keyframes: {
@@ -25,25 +26,47 @@
                                 transform: 'translateY(0)'
                             },
                         },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
                     },
                     animation: {
                         'fade-in-down': 'fade-in-down 0.3s ease-out forwards',
+                        'fade-in': 'fade-in 0.3s ease-out forwards',
                     },
                 },
             },
         };
     </script>
-<script type="importmap">
+    <script>
+        // Aplica el tema oscuro por defecto para evitar el "flash" del tema claro en la carga inicial.
+        if (localStorage.theme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <script>
+        // Define la configuración global de la API que la aplicación espera.
+        window.RRM_API_CONFIG = {
+          baseUrl: 'https://dfrancomobiliariocuba.com/wp-json',
+          nonce: '' // Dejar vacío si las llamadas son públicas. Llenar si el backend de WP lo requiere.
+        };
+    </script>
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    "react": "https://aistudiocdn.com/react@19.2.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@19.2.0/client",
+    "react-dom": "https://aistudiocdn.com/react-dom@19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@19.2.0/",
+    "react/": "https://aistudiocdn.com/react@19.2.0/"
   }
 }
 </script>
 </head>
-<body class="bg-brand-light">
+<body class="bg-brand-light dark:bg-brand-dark">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>

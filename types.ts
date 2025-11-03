@@ -3,17 +3,18 @@ export interface Product {
     name: string;
     description: string;
     price: number;
-    category: Category;
+    sku?: string;
+    categories: Category[];
     imageUrls: string[];
     inStock: boolean;
     featured: boolean;
     createdAt: string; // ISO 8601 date string
 }
 
-export type Category = 'Electrónicos' | 'Ropa' | 'Hogar' | 'Libros';
+export type Category = string;
 
 export interface CategoryItem {
-    id: Category | 'all';
+    id: number;
     name: string;
     imageUrl: string;
 }
@@ -25,3 +26,28 @@ export enum SortOption {
 }
 
 export type ViewMode = 'grid' | 'list';
+
+export interface SiteConfig {
+    logo_url: string;
+    page_name: string;
+    favicon_url: string;
+    footer_copyright: string;
+    menu_inicio: string;
+    menu_servicios: string;
+    menu_inspiracion: string;
+    social_facebook: string;
+    social_instagram: string;
+    social_whatsapp: string;
+    social_email: string;
+}
+
+export interface SliderItem {
+    id: number;
+    title: string;
+    description: {
+        type: 'paragraph' | 'list' | string;
+        content: string | string[];
+    };
+    imageUrl: string;
+    active: boolean;
+}
