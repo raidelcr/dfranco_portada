@@ -1,6 +1,7 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
-import { SortOption } from '../types';
+import { SortOption, CategoryItem } from '../types';
 import { SearchIcon } from './icons';
 
 interface AutocompleteProps {
@@ -102,19 +103,23 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({ id, value, onChange,
 interface FiltersProps {
     searchTerm: string;
     setSearchTerm: (value: string) => void;
-    priceRange: number;
-    setPriceRange: (value: number) => void;
+    priceRange: { min: number; max: number };
+    setPriceRange: React.Dispatch<React.SetStateAction<{ min: number; max: number }>>;
     inStockOnly: boolean;
     setInStockOnly: (value: boolean) => void;
     sortOption: SortOption;
     setSortOption: (value: SortOption) => void;
     maxPrice: number;
     suggestions: string[];
+    categories: CategoryItem[];
+    selectedCategory: number | 'all';
+    setSelectedCategory: (id: number | 'all') => void;
 }
 
 export const DesktopFilters: React.FC<FiltersProps> = ({
     searchTerm, setSearchTerm, priceRange, setPriceRange, 
-    inStockOnly, setInStockOnly, sortOption, setSortOption, maxPrice, suggestions
+    inStockOnly, setInStockOnly, sortOption, setSortOption, maxPrice, suggestions,
+    categories, selectedCategory, setSelectedCategory
 }) => {
     return (
         <aside 
@@ -140,6 +145,21 @@ export const DesktopFilters: React.FC<FiltersProps> = ({
                         </div>
                     </div>
 
+                    {/* Category */}
+                    <div>
+                        <label htmlFor="category-desktop" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoría</label>
+                        <select
+                            id="category-desktop"
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value === 'all' ? 'all' : Number(e.target.value))}
+                            className="w-full mt-1 py-2 px-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-brand-orange focus:border-brand-orange"
+                        >
+                           {categories.map(cat => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     {/* Sort */}
                     <div>
                         <label htmlFor="sort" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Ordenar por</label>
@@ -157,16 +177,33 @@ export const DesktopFilters: React.FC<FiltersProps> = ({
 
                     {/* Price Range */}
                     <div>
-                        <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Precio hasta: <span className="font-bold text-brand-orange">${priceRange}</span></label>
-                        <input
-                            type="range"
-                            id="price"
-                            min="0"
-                            max={maxPrice}
-                            value={priceRange}
-                            onChange={(e) => setPriceRange(Number(e.target.value))}
-                            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer mt-2 accent-brand-orange"
-                        />
+                        <label htmlFor="price-min" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Precio: <span className="font-bold text-brand-orange">${priceRange.min} - ${priceRange.max}</span></label>
+                         <div className="mt-2 space-y-2">
+                            <div>
+                                <label htmlFor="price-min" className="text-xs text-gray-600 dark:text-gray-400">Mínimo</label>
+                                <input
+                                    type="range"
+                                    id="price-min"
+                                    min="0"
+                                    max={maxPrice}
+                                    value={priceRange.min}
+                                    onChange={(e) => setPriceRange(prev => ({ ...prev, min: Math.min(Number(e.target.value), prev.max) }))}
+                                    className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer mt-1 accent-brand-orange"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="price-max" className="text-xs text-gray-600 dark:text-gray-400">Máximo</label>
+                                <input
+                                    type="range"
+                                    id="price-max"
+                                    min="0"
+                                    max={maxPrice}
+                                    value={priceRange.max}
+                                    onChange={(e) => setPriceRange(prev => ({ ...prev, max: Math.max(Number(e.target.value), prev.min) }))}
+                                    className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer mt-1 accent-brand-orange"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     {/* Stock Toggle */}

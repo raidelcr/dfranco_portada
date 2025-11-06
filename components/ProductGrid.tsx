@@ -12,10 +12,9 @@ interface ProductGridProps {
     totalPages: number;
     onNextPage: () => void;
     onPrevPage: () => void;
-    onProductSelect: (product: Product) => void;
 }
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ products, viewMode, currentPage, totalPages, onNextPage, onPrevPage, onProductSelect }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({ products, viewMode, currentPage, totalPages, onNextPage, onPrevPage }) => {
     if (products.length === 0) {
         return (
             <div className="text-center py-20">
@@ -34,8 +33,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products, viewMode, cu
             <div className={containerClasses}>
                 {products.map(product => (
                     viewMode === 'grid' 
-                        ? <GridViewCard key={`${product.id}-grid`} product={product} onProductSelect={onProductSelect} />
-                        : <ListViewCard key={`${product.id}-list`} product={product} onProductSelect={onProductSelect} />
+                        ? <GridViewCard key={`${product.id}-grid`} product={product} />
+                        : <ListViewCard key={`${product.id}-list`} product={product} />
                 ))}
             </div>
 

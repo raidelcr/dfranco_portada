@@ -1,22 +1,23 @@
 
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Product } from '../types';
 import { StarIcon } from './icons';
+import { slugify } from '../lib/utils';
 
 interface CardProps {
     product: Product;
     size?: 'small';
-    onProductSelect: (product: Product) => void;
 }
 
-export const GridViewCard: React.FC<CardProps> = ({ product, size, onProductSelect }) => {
+export const GridViewCard: React.FC<CardProps> = ({ product, size }) => {
     const isSmall = size === 'small';
     
     return (
-        <button
-            onClick={() => onProductSelect(product)}
-            className="block group relative aspect-[4/5] w-full overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer text-left"
+        <Link
+            to={`/producto/${slugify(product.name)}`}
+            className="block group relative aspect-[4/5] w-full overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 text-left"
             aria-label={`Ver detalles de ${product.name}`}
         >
             {/* Background Image */}
@@ -52,14 +53,14 @@ export const GridViewCard: React.FC<CardProps> = ({ product, size, onProductSele
                      <span>Destacado</span>
                  </div>
             )}
-        </button>
+        </Link>
     );
 };
 
-export const ListViewCard: React.FC<CardProps> = ({ product, onProductSelect }) => (
-    <button
-        onClick={() => onProductSelect(product)}
-        className="flex flex-col sm:flex-row bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden w-full group cursor-pointer text-left"
+export const ListViewCard: React.FC<CardProps> = ({ product }) => (
+    <Link
+        to={`/producto/${slugify(product.name)}`}
+        className="flex flex-col sm:flex-row bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden w-full group text-left"
         aria-label={`Ver detalles de ${product.name}`}
     >
         <div className="sm:w-1/3 sm:max-w-[200px] flex-shrink-0 h-48 sm:h-auto relative overflow-hidden">
@@ -92,5 +93,5 @@ export const ListViewCard: React.FC<CardProps> = ({ product, onProductSelect }) 
                  <p className="mt-4 text-xl font-bold text-brand-orange self-start sm:self-end">${product.price.toFixed(2)}</p>
             )}
         </div>
-    </button>
+    </Link>
 );
